@@ -1,4 +1,6 @@
-const database = require('./database/unsplash_database')
+require('dotenv').config();
+
+const database = require('./database/sample_database')
 const app = require('./app')(database)
 
 app.listen(8080, () => {
