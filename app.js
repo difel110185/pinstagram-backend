@@ -30,7 +30,8 @@ module.exports = function(database) {
       query: req.query.query,
       page: req.query.page ? parseInt(req.query.page) : 1,
       per_page: req.query.per_page ? parseInt(req.query.per_page) : 10,
-      liked: req.query.liked ? req.query.liked === "true" : undefined
+      liked: req.query.liked ? req.query.liked === "true" : undefined,
+      email: req.query.email
     };
 
     database.getAllPins(options, (err, pins) => {
@@ -57,6 +58,17 @@ module.exports = function(database) {
         })
     })
   });
+
+  app.post('/api/like-pin', (req, res) => {
+    database.likePin(req.body.email, req.body.pin_id, req.body.liked, (err, user) => {
+      if (err) {
+        res.sendStatus(500)
+        return
+      }
+
+      res.sendStatus(200)
+    })
+  })
 
   app.get('/api/users/:author/pins', authenticateJWT, (req, res) => {
     let options = {

@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const database = require('./database/sample_database')
+const database = require('./database/mysql_database')
 const app = require('./app')(database)
 
 app.listen(8080, () => {
